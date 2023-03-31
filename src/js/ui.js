@@ -14,7 +14,7 @@ class ui {
 		window.onresize = ui.resize;
 		ui.setLanguage();
 		ui.resize();
-		communication.get('user', function (response) {
+		communication.get('contact', function (response) {
 			console.log(response);
 		});
 	}
