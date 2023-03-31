@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "apexcharts": "^3.37.2"
+  },
+  "devDependencies": {
+    "webpack-cli": "^5.0.1"
+  }
+}
