@@ -78,9 +78,22 @@ header {
 }
 
 mapCanvas {
-	display: block;
-	width: 20em;
-	height: 20em;
+	display: inline-block;
+	width: 100%;
+	height: 40em;
+	border-radius: 0.5em;
+	box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
+}
+
+body>div {
+	width: 40em;
+	position: absolute;
+	left: 50%;
+	margin-left: -20em;
+	background: rgba(0, 0, 0, 0.15);
+	text-align: center;
+	padding: 1em 1em 3em 1em;
+	min-height: 100%;
 }
 
 update {
