@@ -14,6 +14,7 @@ class ui {
 		window.onresize = ui.resize;
 		ui.setLanguage();
 		ui.resize();
+		communication.loadMap();
 		communication.get('contact', function (response) {
 			console.log(response);
 		});
@@ -26,10 +27,6 @@ class ui {
 		ui.initChartLocations(data.locations);
 		ui.initChartLog(data.log);
 		ui.initChartApi(data.api);
-		if (location.hash && ui.q('[l="' + location.hash.substring(1).toLowerCase() + '"]'))
-			setTimeout(function () {
-				ui.popup(location.hash.substring(1).toLowerCase());
-			}, 1000);
 	}
 	static initChartGender(data) {
 		var index = {}, total = [0, 0, 0, 0], verified = [0, 0, 0, 0], withImage = [0, 0, 0, 0], genderMap = [2, 1, 3, null];

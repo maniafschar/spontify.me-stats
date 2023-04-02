@@ -1,18 +1,28 @@
+import { heatmap } from "./heatmap";
+
 export { communication }
 
 class communication {
-	static convert(type, callback) {
-	}
 	static get(type, callback) {
 		window.opener.communication.ajax({
 			url: window.opener.global.serverApi + 'statistics/' + type,
 			responseType: 'json',
 			webCall: 'communication.get(type,callback)',
 			success(response) {
-				var list = [];
-				for (var i = 1; i < response.length; i++)
-					list.push(window.opener.model.convert('contact', response, i));
-				callback(list);
+				var isContact = false;
+				for (var i = 0; i < response[0].length; i++) {
+					if (response[0][i] == 'contact.id') {
+						isContact = true;
+						break;
+					}
+				}
+				if (isContact) {
+					var list = [];
+					for (var i = 1; i < response.length; i++)
+						list.push(window.opener.model.convert(type, response, i));
+					callback(list);
+				} else
+					callback(response);
 			}
 		});
 	}
@@ -27,5 +37,17 @@ class communication {
 		xmlhttp.open('GET', 'js/lang/stats' + language + '.json', true);
 		xmlhttp.send();
 
+	}
+	static loadMap() {
+		window.opener.communication.ajax({
+			url: window.opener.global.serverApi + 'action/google?param=js',
+			responseType: 'text',
+			webCall: 'communication.loadMap()',
+			success(r) {
+				var script = document.createElement('script');
+				script.src = r + '&libraries=visualization&callback=heatmap.init';
+				document.head.appendChild(script);
+			}
+		});
 	}
 }

@@ -77,6 +77,12 @@ header {
 	padding-top: 1em;
 }
 
+mapCanvas {
+	display: block;
+	width: 20em;
+	height: 20em;
+}
+
 update {
 	padding-top: 0.95em;
 	position: relative;
