@@ -15,6 +15,7 @@ class ui {
 		ui.setLanguage();
 		ui.resize();
 		communication.loadMap();
+		ui.reposition();
 		communication.get('contact', function (response) {
 			console.log(response);
 		});
@@ -325,6 +326,12 @@ class ui {
 	}
 	static on(e, type, f, once) {
 		e.addEventListener(type, f, { capture: type == 'touchstart' ? true : false, passive: true, once: once == true ? true : false });
+	}
+	static reposition() {
+		var e = ui.q('main').style;
+		e.width = window.opener.ui.q('main').style.width;
+		e.marginLeft = (-parseFloat(e.width) / 2) + 'px';
+		ui.q('body').style.fontSize = window.opener.ui.q('body').style.fontSize;
 	}
 	static setLanguage() {
 		communication.language(opener.global.language, function (response) {

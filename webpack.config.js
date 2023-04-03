@@ -24,8 +24,10 @@ module.exports = (env) => {
 						fs.mkdirSync('dist/css');
 						fs.mkdirSync('dist/js');
 						fs.mkdirSync('dist/js/lang');
+						fs.mkdirSync('dist/images');
 						fs.cpSync('src/css/', 'dist/css', { recursive: true });
 						fs.cpSync('src/js/lang/', 'dist/js/lang', { recursive: true });
+						fs.cpSync('src/images/', 'dist/images', { recursive: true });
 						fs.cpSync('src/stats.html', 'dist/stats.html');
 					})
 				}

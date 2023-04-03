@@ -5,7 +5,8 @@
 	<meta name="viewport"
 		content="initial-scale=1, width=device-width, height=device-height, viewport-fit=cover, user-scalable=no" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
-	<link href="css/stats.css" rel="stylesheet">
+	<link href="css/stats.css" rel="stylesheet" />
+	<link href="css/style.css" rel="stylesheet" />
 	<script type="text/javascript" src="js/stats.js"></script>
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta name="Copyright" content="JNet Quality Consulting GmbH, Munich, Germany. All rights reserved." />
@@ -19,11 +20,38 @@
 </head>
 
 <body onload="ui.init()">
-	<div>
-		<header>
-		</header>
-		<mapCanvas></mapCanvas>
-	</div>
+	<main class="mainBG">
+		<content>
+			<home>
+				<h1 style="margin-top:1em;">Statistiken</h1>
+				<card class="" mainBG">
+					<top>390</top>
+					<bottom>Benutzer</bottom>
+				</card>
+				<card class="" mainBG">
+					<top>38</top>
+					<bottom>aktive Anmeldungen diesen Monat</bottom>
+				</card>
+				<card class="" mainBG">
+					<top>18</top>
+					<bottom>neue Registrieungen</bottom>
+				</card>
+				<h1>Benutzer nach Region</h1>
+				<mapCanvas></mapCanvas>
+			</home>
+		</content>
+		<navigation class="bgColor">
+			<item onclick="ui.navigation.goTo('home', true)" class="home active">
+				<img src="images/home.svg" />
+			</item>
+			<item onclick="ui.navigation.goTo('search')" class="search">
+				<img src="images/marketing.svg" />
+			</item>
+			<item onclick="ui.navigation.goTo('info')" class="info">
+				<img src="images/invoice.svg" />
+			</item>
+		</navigation>
+	</main>
 </body>
 
 </html>
