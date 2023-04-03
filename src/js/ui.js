@@ -10,12 +10,34 @@ class ui {
 	static chartGender;
 	static chartLocations;
 	static chartLog;
+	static goTo(i) {
+		var e = ui.q('navigation item.active');
+		if (e)
+			e.classList.remove("active");
+		ui.q('navigation item:nth-child(' + i + ')').classList.add('active');
+		ui.q('content').style.marginLeft = (-(i - 1) * 100) + '%';
+	}
 	static init() {
-		window.onresize = ui.resize;
 		ui.setLanguage();
-		ui.resize();
 		communication.loadMap();
 		ui.reposition();
+		window.opener.ui.swipe(ui.q('content'), function (dir) {
+			if (dir != 'left' && dir != 'right')
+				return;
+			var i = ui.q('content').style.marginLeft;
+			if (!i)
+				i = 1;
+			else
+				i = -parseInt(i) / 100 + 1;
+			if (dir == 'right') {
+				if (--i < 1)
+					return;
+			} else {
+				if (++i > 3)
+					return;
+			}
+			ui.goTo(i);
+		});
 		communication.get('contact', function (response) {
 			console.log(response);
 		});
@@ -331,6 +353,13 @@ class ui {
 		var e = ui.q('main').style;
 		e.width = window.opener.ui.q('main').style.width;
 		e.marginLeft = (-parseFloat(e.width) / 2) + 'px';
+		if (window.opener.global.getDevice() == 'computer') {
+			e.left = '';
+			e.right = '';
+		} else {
+			e.left = 0;
+			e.right = 0;
+		}
 		ui.q('body').style.fontSize = window.opener.ui.q('body').style.fontSize;
 	}
 	static setLanguage() {
@@ -341,15 +370,6 @@ class ui {
 				e[i].innerHTML = ui.labels[e[i].getAttribute('l')];
 		});
 	}
-	static resize() {
-		var x = Math.max(window.innerWidth, window.innerHeight) / 53;
-		if (x < 12)
-			x = 12;
-		else if (x > 24)
-			x = 24;
-		ui.q('body').style.fontSize = parseInt('' + x) + 'px';
-	}
-
 	static popup(id) {
 		var e = ui.q('popup[l="' + id + '"]').style;
 		setTimeout(function () {

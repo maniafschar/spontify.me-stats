@@ -1,6 +1,16 @@
 content {
 	text-align: center;
+	overflow-y: auto;
+	width: 300%;
+	float: left;
+	transition: all .4s ease-out;
+}
+
+content>* {
+	width: 33.33%;
 	padding: 1em;
+	position: relative;
+	float: left;
 }
 
 card {

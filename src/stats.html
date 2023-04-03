@@ -23,31 +23,37 @@
 	<main class="mainBG">
 		<content>
 			<home>
-				<h1 style="margin-top:1em;">Statistiken</h1>
-				<card class="" mainBG">
+				<h1 style="margin-top:1em;" l="home.statistics"></h1>
+				<card class="mainBG">
 					<top>390</top>
-					<bottom>Benutzer</bottom>
+					<bottom l="home.card1"></bottom>
 				</card>
-				<card class="" mainBG">
+				<card class="mainBG">
 					<top>38</top>
-					<bottom>aktive Anmeldungen diesen Monat</bottom>
+					<bottom l="home.card2"></bottom>
 				</card>
-				<card class="" mainBG">
+				<card class="mainBG">
 					<top>18</top>
-					<bottom>neue Registrieungen</bottom>
+					<bottom l="home.card3"></bottom>
 				</card>
-				<h1>Benutzer nach Region</h1>
+				<h1 l="home.userMap"></h1>
 				<mapCanvas></mapCanvas>
 			</home>
+			<marketing>
+				<h1 style="margin-top:1em;" l="marketing.title"></h1>
+			</marketing>
+			<invoice>
+				<h1 style="margin-top:1em;" l="invoice.title"></h1>
+			</invoice>
 		</content>
 		<navigation class="bgColor">
-			<item onclick="ui.navigation.goTo('home', true)" class="home active">
+			<item onclick="ui.goTo(1)">
 				<img src="images/home.svg" />
 			</item>
-			<item onclick="ui.navigation.goTo('search')" class="search">
+			<item onclick="ui.goTo(2)">
 				<img src="images/marketing.svg" />
 			</item>
-			<item onclick="ui.navigation.goTo('info')" class="info">
+			<item onclick="ui.goTo(3)">
 				<img src="images/invoice.svg" />
 			</item>
 		</navigation>
