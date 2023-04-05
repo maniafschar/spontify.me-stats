@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv='content-language' content='de-de' />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta name="viewport"
+		content="initial-scale=1, width=device-width, height=device-height, viewport-fit=cover, user-scalable=no" />
+	<meta name="Copyright" content="JNet Quality Consulting GmbH, Munich, Germany. All rights reserved." />
+	<meta name="email" content="fanclub@jq-consulting.de" />
+	<meta name="description" content="das Beste kommt spontan" />
+	<meta name="keywords"
+		content="spontaneous, contact, bluetooth, social community, locations, events, chat, meet, organize events, party, dinner" />
+	<meta http-equiv="Content-Security-Policy"
+		content="default-src * gap://ready file: https:; child-src * gap://ready file: https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' blob: data: https:; font-src 'self' data: https:; script-src * 'unsafe-inline' 'unsafe-eval' file: https:" />
+	<meta name="robots" content="index,follow,noodp" />
+	<meta name="fragment" content="!" />
+	<meta name="google-site-verification" content="Sn53nvm_h2HJQo2WDjWXx9rjc0VRBKHTF1ohP1YuPX8" />
+	<meta name="apple-itunes-app" content="app-id=1630967898" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="format-detection" content="date=no" />
+	<meta name="format-detection" content="address=no" />
+	<meta name="format-detection" content="email=no" />
+	<link rel="apple-touch-icon" href="https://skillvents.com/images/icon.png">
+	<link rel="canonical" href="https://skillvents.com/" />
+	<link rel="alternate" href="android-app://com.jq.spontifyme/https/skillvents.com" />
+	<link rel="alternate" href="android-app://com.jq.spontifyme/skillvents/*" />
+	<link rel="icon" type="image/x-icon" href="favicon.ico" />
+	<link rel="preload" as="style" href="css/style.css" />
+	<link rel="preload" as="script" href="js/fmg.js" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script type="text/javascript" src="js/fmg.js"></script>
+	<meta property="og:title" content="skillvents.com" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://skillvents.com" />
+	<meta property="og:image" content="https://skillvents.com/images/icon512.png" />
+	<title>fanclub</title>
+	<style>
+		body {
+			font-size: 16px;
+			text-align: center;
+			color: black;
+		}
+
+		body>div {
+			overflow-y: auto;
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 4em;
+		}
+
+		.logo {
+			height: 4em;
+			transition: all 1s ease-out;
+			margin-left: 100%;
+			margin-top: 1em;
+		}
+
+		images {
+			min-width: 100%;
+			display: block;
+			white-space: nowrap;
+			position: relative;
+			overflow-x: auto;
+			overflow-y: hidden;
+			height: 26em;
+		}
+
+		images>div {
+			margin: 0 2em;
+			position: relative;
+			display: inline-block;
+			height: 100%;
+			padding-top: 4em;
+		}
+
+		images img {
+			border-radius: 0.5em;
+			height: 18em;
+			transition: all 0.4s ease-out;
+			z-index: 1;
+			position: relative;
+			cursor: pointer;
+		}
+
+		images img.active {
+			box-shadow: 0 0 1em rgba(0, 0, 0, 0.3);
+		}
+
+		line {
+			background: rgb(252, 232, 173);
+			height: 4em;
+			position: absolute;
+			left: 0;
+			top: 19em;
+			right: 0;
+		}
+
+		text {
+			display: block;
+			position: relative;
+			max-width: 40em;
+			position: relative;
+			display: inline-block;
+			margin: 1em 1em 3em 1em;
+			transition: all 0.4s ease-out;
+		}
+
+		h1 {
+			margin-top: 0;
+		}
+
+		bottom {
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			height: 4em;
+		}
+
+		buttontext {
+			color: darkblue;
+			box-shadow: none;
+		}
+
+		popup {
+			transform: scale(0);
+			box-shadow: 0 0 5em rgba(0, 0, 0, 0.3);
+			background-color: rgba(255, 255, 255, 0.9);
+			position: absolute;
+			padding: 2em 0;
+			border-radius: 0.5em;
+			transition: all .4s ease-out;
+			color: black;
+			bottom: 5em;
+			width: 30em;
+			left: 50%;
+			margin-left: -15em;
+			top: initial;
+		}
+	</style>
+</head>
+
+<body>
+	<div>
+		<img class="logo" src="images/fanclub.svg" />
+		<images>
+			<div><img src="images/home1.png" onclick="select(0)" /></div>
+			<div><img src="images/home2.png" onclick="select(1)" /></div>
+			<div><img src="images/home3.png" onclick="select(2)" /></div>
+			<div><img src="images/home4.png" onclick="select(3)" /></div>
+		</images>
+		<line> </line>
+		<text></text>
+	</div>
+	<popup l="legal" onclick="toggleImprint()"></popup>
+	<bottom>
+		<buttontext onclick="toggleImprint()">Impressum</buttontext>
+		<buttontext>Demo</buttontext>
+	</bottom>
+	<script type="application/javascript">
+		var xmlhttp = new XMLHttpRequest();
+		var labels;
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4) {
+				if (xmlhttp.status >= 200 && xmlhttp.status < 300) {
+					var e = ui.qa('[l]');
+					labels = JSON.parse(xmlhttp.response);
+					for (var i = 0; i < e.length; i++)
+						e[i].innerHTML = labels[e[i].getAttribute('l')];
+				}
+			}
+		};
+		xmlhttp.open('GET', 'js/lang/fanclubDE.json', true);
+		xmlhttp.send();
+		setTimeout(function () {
+			var e = ui.qa('images img');
+			e[0].style.marginTop = '1em';
+			e[1].style.marginTop = '-5em';
+			e[2].style.marginTop = '3em';
+			e[3].style.marginTop = '-9em';
+			ui.q('.logo').style.marginLeft = 0;
+			ui.on(e[0], 'transitionend', function () { select(0) }, true);
+		}, 100);
+		function select(i) {
+			var e = ui.qa('images img');
+			if (ui.q('text').style.opacity === 0 || ui.classContains(e[i], 'active'))
+				return;
+			ui.classRemove(e, 'active');
+			ui.classAdd(e[i], 'active');
+			ui.on('text', 'transitionend', function () {
+				ui.html('text', labels['page' + (i + 1)]);
+				ui.q('text').style.opacity = '';
+			}, true);
+			ui.q('text').style.opacity = 0;
+		}
+		function toggleImprint() {
+			ui.q('popup').style.transform = ui.q('popup').style.transform ? '' : 'scale(1)';
+		}
+	</script>
+</body>
+
+</html>

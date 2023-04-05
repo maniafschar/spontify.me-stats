@@ -29,6 +29,7 @@ module.exports = (env) => {
 						fs.cpSync('src/js/lang/', 'dist/js/lang', { recursive: true });
 						fs.cpSync('src/images/', 'dist/images', { recursive: true });
 						fs.cpSync('src/stats.html', 'dist/stats.html');
+						fs.cpSync('src/fanclub.html', 'dist/fanclub.html');
 					})
 				}
 			}

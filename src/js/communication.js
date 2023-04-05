@@ -36,7 +36,6 @@ class communication {
 		};
 		xmlhttp.open('GET', 'js/lang/stats' + language + '.json', true);
 		xmlhttp.send();
-
 	}
 	static loadMap() {
 		window.opener.communication.ajax({

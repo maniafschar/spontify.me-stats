@@ -21,12 +21,10 @@ class heatmap {
 					e = l[i][1];
 			}
 			heatmap.map = new google.maps.Map(ui.q('mapCanvas'), {
+				center: { lat: 48.1, lng: 11.6 },
+				zoom: 5,
 				mapTypeId: google.maps.MapTypeId.SATELLITE
 			});
-			heatmap.map.fitBounds(new google.maps.LatLngBounds(
-				new google.maps.LatLng(s, w),
-				new google.maps.LatLng(n, e)
-			));
 			new google.maps.visualization.HeatmapLayer({
 				data: points,
 				map: heatmap.map,

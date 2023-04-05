@@ -1,4 +1,4 @@
-import { communication } from "./communication";
+import { communication } from './communication';
 
 export { ui };
 
