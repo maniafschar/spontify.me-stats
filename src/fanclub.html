@@ -82,7 +82,6 @@
 			border-radius: 0.5em;
 			height: 18em;
 			transition: all 0.4s ease-out;
-			z-index: 1;
 			position: relative;
 			cursor: pointer;
 		}
@@ -148,13 +147,13 @@
 <body>
 	<div>
 		<img class="logo" src="images/fanclub.svg" />
+		<line> </line>
 		<images>
 			<div><img src="images/home1.png" onclick="select(0)" /></div>
 			<div><img src="images/home2.png" onclick="select(1)" /></div>
 			<div><img src="images/home3.png" onclick="select(2)" /></div>
 			<div><img src="images/home4.png" onclick="select(3)" /></div>
 		</images>
-		<line> </line>
 		<text></text>
 	</div>
 	<popup l="legal" onclick="toggleImprint()"></popup>
