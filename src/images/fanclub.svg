@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400" fill="black">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" fill="black">
 	<defs>
 		<style>
 			@font-face {
@@ -9,5 +9,6 @@
 			}
 		</style>
 	</defs>
-	<text x="50%" y="90%" font-size="300" font-family="Adelina"  text-anchor="middle">Fanclub</text>	
+	<text x="50%" y="60%" font-size="210" font-family="Adelina"  text-anchor="middle">Fanclub</text>
+	<text x="50%" y="95%" font-size="90" font-family="Adelina"  text-anchor="middle" fill="rgb(60, 60, 110)">mach mehr mit Deinem Verein!</text>
 </svg>
