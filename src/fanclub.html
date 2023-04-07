@@ -38,6 +38,26 @@
 	<meta property="og:image" content="https://skillvents.com/images/icon512.png" />
 	<title>fanclub</title>
 	<style>
+		@media screen and (max-width: 40em) {
+			text {
+				max-width: 100vw;
+			}
+
+			text>div>span {
+				max-width: 100vw;
+			}
+		}
+
+		@media screen and (min-width: 40em) {
+			text {
+				max-width: 40em;
+			}
+
+			text>div>span {
+				max-width: 40em;
+			}
+		}
+
 		body {
 			font-size: 16px;
 			text-align: center;
@@ -68,6 +88,8 @@
 			overflow-x: auto;
 			overflow-y: hidden;
 			height: 26em;
+			padding: 0 2em;
+			scroll-behavior: smooth;
 		}
 
 		images>div {
@@ -100,13 +122,19 @@
 		}
 
 		text {
-			display: block;
-			position: relative;
-			max-width: 40em;
-			position: relative;
 			display: inline-block;
-			margin: 1em 1em 3em 1em;
+		}
+
+		text>div {
 			transition: all 0.4s ease-in-out;
+		}
+
+		text>div>span {
+			position: relative;
+			display: inline;
+			padding: 1em 1em 3em 1em;
+			vertical-align: text-top;
+			float: left;
 		}
 
 		h1 {
@@ -124,6 +152,24 @@
 		buttontext {
 			color: darkblue;
 			box-shadow: none;
+		}
+
+		nav {
+			position: absolute;
+			top: 0;
+			color: rgba(0, 0, 0, 0.1);
+			font-size: 2em;
+			cursor: pointer;
+		}
+
+		nav.next {
+			right: 0;
+			padding: 3em 0 5em 5em;
+		}
+
+		nav.prev {
+			left: 0;
+			padding: 3em 5em 5em 0;
 		}
 
 		popup {
@@ -153,13 +199,24 @@
 			<div><img src="images/home2.png" onclick="select(1)" /></div>
 			<div><img src="images/home3.png" onclick="select(2)" /></div>
 			<div><img src="images/home4.png" onclick="select(3)" /></div>
+			<div><img src="images/home5.png" onclick="select(4)" /></div>
 		</images>
-		<text></text>
+		<text>
+			<div>
+				<span l="page1"></span>
+				<span l="page2"></span>
+				<span l="page3"></span>
+				<span l="page4"></span>
+				<span l="page5"></span>
+			</div>
+			<nav class="prev" onclick="nav()">&nbsp;&lt;</nav>
+			<nav class="next" onclick="nav(true)">&gt;&nbsp;</nav>
+		</text>
 	</div>
 	<popup l="legal" onclick="toggleImprint()"></popup>
 	<bottom>
 		<buttontext onclick="toggleImprint()">Impressum</buttontext>
-		<buttontext>Demo</buttontext>
+		<buttontext onclick="openDemo()">Demo</buttontext>
 	</bottom>
 	<script type="application/javascript">
 		var xmlhttp = new XMLHttpRequest();
@@ -171,6 +228,7 @@
 					labels = JSON.parse(xmlhttp.response);
 					for (var i = 0; i < e.length; i++)
 						e[i].innerHTML = labels[e[i].getAttribute('l')];
+					ui.q('text>div').style.width = ui.q('text>div>span').clientWidth * 5 + 'px';
 				}
 			}
 		};
@@ -191,11 +249,26 @@
 				return;
 			ui.classRemove(e, 'active');
 			ui.classAdd(e[i], 'active');
-			ui.on('text', 'transitionend', function () {
-				ui.html('text', labels['page' + (i + 1)]);
-				ui.q('text').style.opacity = '';
-			}, true);
-			ui.q('text').style.opacity = 0;
+			ui.q('text>div').style.marginLeft = (-ui.q('text').clientWidth * i) + 'px';
+			ui.css('text>nav', 'display', '');
+			if (i == 0)
+				ui.q('text>nav.prev').style.display = 'none';
+			else if (i == ui.qa('images img').length - 1)
+				ui.q('text>nav.next').style.display = 'none';
+		}
+		function nav(next) {
+			var e = ui.qa('images img'), i = 0;
+			for (; i < e.length; i++) {
+				if (ui.classContains(e[i], 'active'))
+					break;
+			}
+			select(next ? ++i : --i);
+			ui.q('images').scrollLeft =
+				ui.q('images img.active').parentElement.offsetLeft + ui.q('images img.active').parentElement.clientWidth / 2
+				- ui.q('text').clientWidth / 2 - ui.q('text').offsetLeft;
+		}
+		function openDemo() {
+			ui.navigation.openHTML('https://fcalpenkickers.fan-club.online', 'fanclub_demo');
 		}
 		function toggleImprint() {
 			ui.q('popup').style.transform = ui.q('popup').style.transform ? '' : 'scale(1)';
