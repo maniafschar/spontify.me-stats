@@ -123,10 +123,13 @@
 
 		text {
 			display: inline-block;
+			position: relative;
 		}
 
 		text>div {
 			transition: all 0.4s ease-in-out;
+			position: relative;
+			display: block;
 		}
 
 		text>div>span {
@@ -164,12 +167,12 @@
 
 		nav.next {
 			right: 0;
-			padding: 3em 0 5em 5em;
+			padding: 2em 0 2em 2em;
 		}
 
 		nav.prev {
 			left: 0;
-			padding: 3em 5em 5em 0;
+			padding: 2em 2em 2em 0;
 		}
 
 		popup {
@@ -229,7 +232,7 @@
 					for (var i = 0; i < e.length; i++)
 						e[i].innerHTML = labels[e[i].getAttribute('l')];
 					ui.q('text>div').style.width = ui.q('text>div>span').clientWidth * 5 + 'px';
-					ui.swipe('text>div', function (dir) {
+					ui.swipe('text', function (dir) {
 						if (dir == 'left')
 							nav(true);
 						else if (dir == 'right')
