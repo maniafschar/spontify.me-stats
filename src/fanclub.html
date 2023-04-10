@@ -93,7 +93,7 @@
 			position: relative;
 			display: inline-block;
 			height: 100%;
-			padding-top: 4em;
+			vertical-align: text-top;
 		}
 
 		images img {
@@ -105,7 +105,9 @@
 		}
 
 		images img.active {
-			box-shadow: 0 0 1em rgba(0, 0, 0, 0.3);
+			box-shadow: 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.3);
+			margin-top: -0.5em;
+			margin-left: -0.5em;
 		}
 
 		line {
@@ -244,11 +246,12 @@
 		xmlhttp.open('GET', 'js/lang/fanclubDE.json', true);
 		xmlhttp.send();
 		setTimeout(function () {
-			var e = ui.qa('images img');
-			e[0].style.marginTop = '1em';
-			e[1].style.marginTop = '-5em';
-			e[2].style.marginTop = '3em';
-			e[3].style.marginTop = '-9em';
+			var e = ui.qa('images>div');
+			e[0].style.paddingTop = '3em';
+			e[1].style.paddingTop = '5.5em';
+			e[2].style.paddingTop = '2em';
+			e[3].style.paddingTop = '7.5em';
+			e[4].style.paddingTop = '0.5em';
 			ui.q('.logo').style.marginLeft = 0;
 			ui.on(e[0], 'transitionend', function () { select(0) }, true);
 		}, 100);
