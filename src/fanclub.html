@@ -99,7 +99,7 @@
 		images img {
 			border-radius: 0.5em;
 			height: 18em;
-			transition: all 0.4s ease-out;
+			transition: all 0.4s ease-in-out;
 			position: relative;
 			cursor: pointer;
 		}
@@ -136,6 +136,10 @@
 			padding: 1em 1em 3em 1em;
 			vertical-align: text-top;
 			float: left;
+		}
+
+		text img {
+			cursor: pointer;
 		}
 
 		h1 {
@@ -200,7 +204,7 @@
 		<img class="logo" src="images/fanclub.svg" />
 		<line> </line>
 		<images>
-			<div><img src="images/home1.png" onclick="select(0)" /></div>
+			<div><img src="images/home1.png" onclick="select(0)" class="active" /></div>
 			<div><img src="images/home2.png" onclick="select(1)" /></div>
 			<div><img src="images/home3.png" onclick="select(2)" /></div>
 			<div><img src="images/home4.png" onclick="select(3)" /></div>
@@ -253,7 +257,6 @@
 			e[3].style.paddingTop = '7.5em';
 			e[4].style.paddingTop = '0.5em';
 			ui.q('.logo').style.marginLeft = 0;
-			ui.on(e[0], 'transitionend', function () { select(0) }, true);
 		}, 100);
 		function select(i) {
 			var max = ui.qa('images img').length - 1;
