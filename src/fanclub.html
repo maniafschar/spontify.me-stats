@@ -89,19 +89,20 @@
 		}
 
 		images>div {
-			margin: 0 2em;
+			width: 16em;
 			position: relative;
 			display: inline-block;
 			height: 100%;
 			vertical-align: text-top;
+			transition: all 0.8s ease-in-out;
 		}
 
 		images img {
 			border-radius: 0.5em;
 			height: 18em;
-			transition: all 0.4s ease-in-out;
 			position: relative;
 			cursor: pointer;
+			transition: all 0.4s ease-in-out;
 		}
 
 		images img.active {
@@ -218,7 +219,7 @@
 				<span l="page4"></span>
 				<span l="page5"></span>
 			</div>
-			<nav class="prev" onclick="nav()">&nbsp;&lt;</nav>
+			<nav class="prev" onclick="nav()" style="display:none;">&nbsp;&lt;</nav>
 			<nav class="next" onclick="nav(true)">&gt;&nbsp;</nav>
 		</text>
 	</div>
