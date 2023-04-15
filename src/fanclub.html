@@ -54,10 +54,74 @@
 			}
 		}
 
+		@media print {
+			@page {
+				margin: 0.4in 0.3in;
+			}
+
+			body {
+				-webkit-print-color-adjust: exact;
+				print-color-adjust: exact;
+				font-size: 14px !important;
+				height: 100%;
+				overflow: auto;
+			}
+
+			.logo {
+				margin: 1em 0 2em 0 !important;
+				height: 8em;
+			}
+
+			text>div>span {
+				padding: 1em 0 0 0 !important;
+			}
+
+			text img {
+				display: none;
+			}
+
+			images {
+				height: 22em !important;
+			}
+
+			images img {
+				height: 21em !important;
+			}
+
+			images>div {
+				width: 24em !important;
+			}
+
+			print {
+				display: block !important;
+				position: relative;
+				height: 100vh;
+				float: none !important;
+				box-sizing: content-box !important;
+			}
+
+			page {
+				display: block;
+				position: relative;
+				float: none !important;
+				box-sizing: content-box !important;
+				height: 100vh;
+				width: 100vw;
+				page-break-after: always;
+			}
+
+			body>div,
+			popup,
+			bottom {
+				display: none;
+			}
+		}
+
 		body {
 			font-size: 16px;
 			text-align: center;
 			color: black;
+			position: relative;
 		}
 
 		body>div {
@@ -67,6 +131,10 @@
 			right: 0;
 			top: 0;
 			bottom: 3em;
+		}
+
+		print {
+			display: none;
 		}
 
 		.logo {
@@ -111,12 +179,12 @@
 			margin-left: -0.5em;
 		}
 
-		line {
+		images line {
 			background: rgb(252, 232, 173);
 			height: 4em;
 			position: absolute;
 			left: 0;
-			top: 19em;
+			top: 11em;
 			right: 0;
 		}
 
@@ -203,8 +271,8 @@
 <body>
 	<div>
 		<img class="logo" src="images/fanclub.svg" />
-		<line> </line>
 		<images>
+			<line> </line>
 			<div><img src="images/home1.png" onclick="select(0)" class="active" /></div>
 			<div><img src="images/home2.png" onclick="select(1)" /></div>
 			<div><img src="images/home3.png" onclick="select(2)" /></div>
@@ -223,6 +291,46 @@
 			<nav class="next" onclick="nav(true)">&gt;&nbsp;</nav>
 		</text>
 	</div>
+	<print>
+		<page>
+			<img class="logo" src="images/fanclub.svg" />
+			<images>
+				<line> </line>
+				<div><img src="images/home1.png" onclick="select(0)" /></div>
+				<div><img src="images/home2.png" onclick="select(1)" /></div>
+			</images>
+			<text>
+				<div>
+					<span l="page1"></span>
+					<span l="page2"></span>
+				</div>
+			</text>
+		</page>
+		<page>
+			<images>
+				<line> </line>
+				<div><img src="images/home3.png" onclick="select(2)" /></div>
+				<div><img src="images/home4.png" onclick="select(3)" /></div>
+			</images>
+			<text>
+				<div>
+					<span l="page3"></span>
+					<span l="page4"></span>
+				</div>
+			</text>
+		</page>
+		<page>
+			<images>
+				<line> </line>
+				<div><img src="images/home5.png" onclick="select(4)" /></div>
+			</images>
+			<text>
+				<div>
+					<span l="page5"></span>
+				</div>
+			</text>
+		</page>
+	</print>
 	<popup l="legal" onclick="toggleImprint()"></popup>
 	<bottom>
 		<buttontext onclick="toggleImprint()">Impressum</buttontext>
