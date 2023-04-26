@@ -10,10 +10,28 @@ class ui {
 	static chartGender;
 	static chartLocations;
 	static chartLog;
+	static chart(i) {
+		communication.get('contact', function (response) {
+			var e = ui.q('popup');
+			e.innerHTML = '';
+			ui.initChartGender(response);
+			ui.chartGender.render();
+			e.style.transform = e.style.transform && e.style.transform.indexOf('1') > 0 ? 'scale(0)' : 'scale(1)';
+		});
+	}
+	static closeChart() {
+		var e = ui.q('popup');
+		if (e.style.transform && e.style.transform.indexOf('1') > 0)
+			setTimeout(function () {
+				e.style.transform = 'scale(0)';
+			}, 50);
+
+	}
 	static goTo(i) {
 		var e = ui.q('navigation item.active');
 		if (e)
-			e.classList.remove("active");
+			e.classList.remove('active');
+		ui.closeChart();
 		ui.q('navigation item:nth-child(' + i + ')').classList.add('active');
 		ui.q('content').style.marginLeft = (-(i - 1) * 100) + '%';
 	}
@@ -38,31 +56,17 @@ class ui {
 			}
 			ui.goTo(i);
 		});
-		communication.get('contact', function (response) {
-			console.log(response);
-		});
-	}
-	static initCharts(data) {
-		var d = new Date(data.update);
-		ui.q('update').innerHTML = ui.labels.headerUpdate.replace('{date}', d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear() + ' ' + d.getHours() + ':' + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes())
-		ui.initChartGender(data.user);
-		ui.initChartAge(data.user);
-		ui.initChartLocations(data.locations);
-		ui.initChartLog(data.log);
-		ui.initChartApi(data.api);
 	}
 	static initChartGender(data) {
-		var index = {}, total = [0, 0, 0, 0], verified = [0, 0, 0, 0], withImage = [0, 0, 0, 0], genderMap = [2, 1, 3, null];
-		for (var i = 0; i < data[0].length; i++)
-			index[data[0][i]] = i;
-		for (var i = 1; i < data.length; i++) {
-			var x = data[i][index['_count']] / 1000;
+		var total = [0, 0, 0, 0], verified = [0, 0, 0, 0], withImage = [0, 0, 0, 0], genderMap = [2, 1, 3, null];
+		for (var i = 0; i < data.length; i++) {
+			var x = data[i]._count / 1000;
 			for (var i2 = 0; i2 < genderMap.length; i2++) {
-				if (data[i][index['contact.gender']] == genderMap[i2]) {
+				if (data[i].gender == genderMap[i2]) {
 					total[i2] += x;
-					if (data[i][index['contact.verified']])
+					if (data[i].verified)
 						verified[i2] += x;
-					if (data[i][index['_image']])
+					if (data[i]._image)
 						withImage[i2] += x;
 				}
 			}
@@ -74,7 +78,7 @@ class ui {
 		}
 		if (ui.chartGender)
 			ui.chartGender.destroy();
-		ui.chartGender = new ApexCharts(ui.q("chart.gender"), {
+		ui.chartGender = new ApexCharts(ui.q('popup'), {
 			chart: {
 				type: 'bar',
 				toolbar: {
@@ -115,10 +119,6 @@ class ui {
 			}],
 			labels: [ui.labels.female, ui.labels.male, ui.labels.divers, ui.labels.noData]
 		});
-		setTimeout(function () {
-			ui.q("chart.gender").innerHTML = '';
-			ui.chartGender.render();
-		}, 400);
 	}
 	static initChartAge(data) {
 		var index = {}, female = [0, 0, 0, 0, 0, 0, 0], male = [0, 0, 0, 0, 0, 0, 0], divers = [0, 0, 0, 0, 0, 0, 0], noData = [0, 0, 0, 0, 0, 0, 0];
@@ -151,9 +151,9 @@ class ui {
 		}
 		if (ui.chartAge) {
 			ui.chartAge.destroy();
-			ui.q("chart.age").innerHTML = '';
+			ui.q('chart.age').innerHTML = '';
 		}
-		ui.chartAge = new ApexCharts(ui.q("chart.age"), {
+		ui.chartAge = new ApexCharts(ui.q('chart.age'), {
 			chart: {
 				type: 'bar',
 				toolbar: {
@@ -191,7 +191,7 @@ class ui {
 			labels: [ui.labels.until + ' 20', '20-30', '30-40', '40-50', '50-60', ui.labels.from + ' 60', ui.labels.noData]
 		});
 		setTimeout(function () {
-			ui.q("chart.age").innerHTML = '';
+			ui.q('chart.age').innerHTML = '';
 			ui.chartAge.render();
 		}, 400);
 	}
@@ -210,9 +210,9 @@ class ui {
 		}
 		if (ui.chartApi) {
 			ui.chartApi.destroy();
-			ui.q("chart.api").innerHTML = '';
+			ui.q('chart.api').innerHTML = '';
 		}
-		ui.chartApi = new ApexCharts(ui.q("chart.api"), {
+		ui.chartApi = new ApexCharts(ui.q('chart.api'), {
 			chart: {
 				type: 'bar',
 				toolbar: {
@@ -233,7 +233,7 @@ class ui {
 			labels: labels
 		});
 		setTimeout(function () {
-			ui.q("chart.api").innerHTML = '';
+			ui.q('chart.api').innerHTML = '';
 			ui.chartApi.render();
 		}, 400);
 	}
@@ -275,9 +275,9 @@ class ui {
 		}
 		if (ui.chartLocations) {
 			ui.chartLocations.destroy();
-			ui.q("chart.locations").innerHTML = '';
+			ui.q('chart.locations').innerHTML = '';
 		}
-		ui.chartLocations = new ApexCharts(ui.q("chart.locations"), {
+		ui.chartLocations = new ApexCharts(ui.q('chart.locations'), {
 			chart: {
 				type: 'bar',
 				stacked: true,
@@ -296,7 +296,7 @@ class ui {
 			labels: labels
 		});
 		setTimeout(function () {
-			ui.q("chart.locations").innerHTML = '';
+			ui.q('chart.locations').innerHTML = '';
 			ui.chartLocations.render();
 		}, 400);
 	}
@@ -313,9 +313,9 @@ class ui {
 		}
 		if (ui.chartLog) {
 			ui.chartLog.destroy();
-			ui.q("chart.log").innerHTML = '';
+			ui.q('chart.log').innerHTML = '';
 		}
-		ui.chartLog = new ApexCharts(ui.q("chart.log"), {
+		ui.chartLog = new ApexCharts(ui.q('chart.log'), {
 			chart: {
 				type: 'line',
 				toolbar: {
@@ -336,7 +336,7 @@ class ui {
 			labels: labels
 		});
 		setTimeout(function () {
-			ui.q("chart.log").innerHTML = '';
+			ui.q('chart.log').innerHTML = '';
 			ui.chartLog.render();
 		}, 400);
 	}
@@ -369,11 +369,5 @@ class ui {
 			for (var i = 0; i < e.length; i++)
 				e[i].innerHTML = ui.labels[e[i].getAttribute('l')];
 		});
-	}
-	static popup(id) {
-		var e = ui.q('popup[l="' + id + '"]').style;
-		setTimeout(function () {
-			e.transform = e.transform && e.transform.indexOf('1') > 0 ? 'scale(0)' : 'scale(1)';
-		}, 100);
 	}
 }

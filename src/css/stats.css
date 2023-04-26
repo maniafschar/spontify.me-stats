@@ -21,6 +21,7 @@ card {
 	box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
 	border-radius: 0.5em;
 	margin: 1em;
+	cursor: pointer;
 }
 
 card top {
@@ -66,4 +67,20 @@ chart {
 	width: 40em;
 	color: black;
 	line-height: 1.8;
+}
+
+popup {
+	transform: scale(0);
+	box-shadow: 0 0 5em rgba(0, 0, 0, 0.3);
+	background-color: rgba(255, 255, 255, 0.9);
+	border-radius: 0.5em;
+	transition: all .4s ease-out;
+	color: black;
+	bottom: 4em;
+	width: initial !important;
+	left: 1em !important;
+	top: 1em !important;
+	right: 1em !important;
+	z-index: 7;
+	padding: 1em !important;
 }

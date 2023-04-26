@@ -121,7 +121,11 @@
 			font-size: 16px;
 			text-align: center;
 			color: black;
-			position: relative;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
 		}
 
 		body>div {
@@ -371,7 +375,7 @@
 			e[1].style.paddingTop = '5.5em';
 			e[2].style.paddingTop = '2em';
 			e[3].style.paddingTop = '7.5em';
-			e[4].style.paddingTop = '0.5em';
+			e[4].style.paddingTop = '1em';
 			ui.q('.logo').style.marginLeft = 0;
 		}, 100);
 		function select(i) {
