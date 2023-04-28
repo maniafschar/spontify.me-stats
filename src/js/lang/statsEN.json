@@ -5,5 +5,12 @@
 	"home.statistics": "Statistics",
 	"home.userMap": "Benutzer nach Region",
 	"marketing.title": "Marketing",
-	"invoice.title": "Invoices"
+	"invoice.title": "Invoices",
+	"noData": "Unspecified",
+	"female": "Women",
+	"male": "Men",
+	"divers": "Diverse",
+	"total": "Total",
+	"verified": "Verified",
+	"withImage": "With Image"
 }

@@ -22,19 +22,22 @@
 
 <body onload="ui.init()">
 	<main class="mainBG">
-		<popup></popup>
+		<popup>
+			<panel></panel>
+			<close onclick="ui.close()">x</close>
+		</popup>
 		<content>
 			<home>
 				<h1 style="margin-top:1em;" l="home.statistics"></h1>
-				<card class="mainBG" onclick="ui.chart(1)">
+				<card class="mainBG" onclick="ui.open('User')">
 					<top>390</top>
 					<bottom l="home.card1"></bottom>
 				</card>
-				<card class="mainBG" onclick="ui.chart(2)">
+				<card class="mainBG" onclick="ui.open('Api')">
 					<top>38</top>
 					<bottom l="home.card2"></bottom>
 				</card>
-				<card class="mainBG" onclick="ui.chart(3)">
+				<card class="mainBG" onclick="ui.open('Log')">
 					<top>18</top>
 					<bottom l="home.card3"></bottom>
 				</card>
