@@ -11,6 +11,7 @@ class charts {
 	static chartLog;
 
 	static initChart(query, data) {
+		ui.q('popup panel').innerHTML = '';
 		charts['initChart' + query](data);
 	}
 	static initChartUser(data) {
@@ -71,22 +72,22 @@ class charts {
 		charts.chartGender.render();
 	}
 	static initChartAge(data) {
-		var index = {}, female = [0, 0, 0, 0, 0, 0, 0], male = [0, 0, 0, 0, 0, 0, 0], divers = [0, 0, 0, 0, 0, 0, 0], noData = [0, 0, 0, 0, 0, 0, 0];
+		var female = [0, 0, 0, 0, 0, 0, 0], male = [0, 0, 0, 0, 0, 0, 0], divers = [0, 0, 0, 0, 0, 0, 0], noData = [0, 0, 0, 0, 0, 0, 0];
 		for (var i = 0; i < data.length; i++) {
-			var x = data[i][index['_count']] / 1000, i2;
-			if (data[i][index['_age']] == null)
+			var x = data[i]._count / 1000, i2;
+			if (data[i]._age == null)
 				i2 = male.length - 1;
 			else
-				i2 = data[i][index['_age']] - 1;
+				i2 = data[i]._age - 1;
 			if (i2 < 0)
 				i2 = 0;
 			else if (i2 > male.length - 1)
 				i2 = male.length - 1;
-			if (data[i][index['contact.gender']] == 1)
+			if (data[i].contact.gender == 1)
 				male[i2] += x;
-			else if (data[i][index['contact.gender']] == 2)
+			else if (data[i].contact.gender == 2)
 				female[i2] += x;
-			else if (data[i][index['contact.gender']] == 3)
+			else if (data[i].contact.gender == 3)
 				divers[i2] += x;
 			else
 				noData[i2] += x;
@@ -141,23 +142,18 @@ class charts {
 		}, 400);
 	}
 	static initChartApi(data) {
-		var index = {};
-		for (var i = 0; i < data[0].length; i++)
-			index[data[0][i]] = i;
 		charts.chartApiData = [];
 		var labels = [], values = [];
-		for (var i = 1; i < data.length; i++) {
-			if (data[i][index['_percentage']] >= 0.005) {
-				values.push(parseInt('' + (data[i][index['_percentage']] * 100 + 0.5)));
-				labels.push(data[i][index['_label']]);
+		for (var i = 0; i < data.length; i++) {
+			if (data[i]._percentage >= 0.005) {
+				values.push(parseInt('' + (data[i]._percentage * 100 + 0.5)));
+				labels.push(data[i]._label);
 				charts.chartApiData.push(data[i]);
 			}
 		}
-		if (charts.chartApi) {
+		if (charts.chartApi)
 			charts.chartApi.destroy();
-			ui.q('chart.api').innerHTML = '';
-		}
-		charts.chartApi = new ApexCharts(ui.q('chart.api'), {
+		charts.chartApi = new ApexCharts(ui.q('popup panel'), {
 			chart: {
 				type: 'bar',
 				toolbar: {
@@ -167,7 +163,7 @@ class charts {
 			tooltip: {
 				y: {
 					formatter: function (value, { series, seriesIndex, dataPointIndex, w }) {
-						return ui.labels.calls.replace('{0}', value).replace('{1}', parseInt(charts.chartApiData[dataPointIndex][index['_time']] + 0.5));
+						return ui.labels.calls.replace('{0}', value).replace('{1}', parseInt(charts.chartApiData[dataPointIndex]._time + 0.5));
 					}
 				}
 			},
@@ -178,14 +174,10 @@ class charts {
 			labels: labels
 		});
 		setTimeout(function () {
-			ui.q('chart.api').innerHTML = '';
 			charts.chartApi.render();
 		}, 400);
 	}
 	static initChartLocations(data) {
-		var index = {};
-		for (var i = 0; i < data[0].length; i++)
-			index[data[0][i]] = i;
 		var l = [], series = [
 			{ name: ui.labels.category0, data: [] },
 			{ name: ui.labels.category1, data: [] },
@@ -195,8 +187,8 @@ class charts {
 			{ name: ui.labels.category5, data: [] }
 		];
 		for (var i = 1; i < data.length; i++) {
-			var category = parseInt(data[i][index['location.category']]);
-			var town = data[i][index['location.town']];
+			var category = parseInt(data[i].location.category);
+			var town = data[i].location.town;
 			var e = null;
 			for (var i2 = 0; i2 < l.length; i2++) {
 				if (l[i2].town == town) {
@@ -208,7 +200,7 @@ class charts {
 				e = { total: 0, town: town };
 				l.push(e);
 			}
-			e[category] = data[i][index['_c']] / 10;
+			e[category] = data[i]._c / 10;
 			e.total += e[category];
 		}
 		l.sort(function (a, b) { return a.total < b.total ? 1 : -1 });
@@ -222,7 +214,7 @@ class charts {
 			charts.chartLocations.destroy();
 			ui.q('chart.locations').innerHTML = '';
 		}
-		charts.chartLocations = new ApexCharts(ui.q('chart.locations'), {
+		charts.chartLocations = new ApexCharts(ui.q('popup panel'), {
 			chart: {
 				type: 'bar',
 				stacked: true,
@@ -241,26 +233,22 @@ class charts {
 			labels: labels
 		});
 		setTimeout(function () {
-			ui.q('chart.locations').innerHTML = '';
 			charts.chartLocations.render();
 		}, 400);
 	}
 	static initChartLog(data) {
-		var index = {};
-		for (var i = 0; i < data[0].length; i++)
-			index[data[0][i]] = i;
 		var labels = [], values = [];
-		for (var i = 1; i < data.length; i++) {
-			if (data[i][index['_time']] > -1) {
-				values.push(parseInt('' + (data[i][index['_count']] * 100 + 0.5)));
-				labels.push((i == data.length - 1 ? ui.labels.from + ' ' : '') + (data[i][index['_time']] * 20));
+		for (var i = 0; i < data.length; i++) {
+			if (data[i]._time > -1) {
+				values.push(parseInt('' + (data[i]._count * 100 + 0.5)));
+				labels.push((i == data.length - 1 ? ui.labels.from + ' ' : '') + (data[i]._time * 20));
 			}
 		}
 		if (charts.chartLog) {
 			charts.chartLog.destroy();
 			ui.q('chart.log').innerHTML = '';
 		}
-		charts.chartLog = new ApexCharts(ui.q('chart.log'), {
+		charts.chartLog = new ApexCharts(ui.q('popup panel'), {
 			chart: {
 				type: 'line',
 				toolbar: {
@@ -281,7 +269,6 @@ class charts {
 			labels: labels
 		});
 		setTimeout(function () {
-			ui.q('chart.log').innerHTML = '';
 			charts.chartLog.render();
 		}, 400);
 	}

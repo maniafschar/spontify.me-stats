@@ -9,20 +9,10 @@ class communication {
 			responseType: 'json',
 			webCall: 'communication.get(type,callback)',
 			success(response) {
-				var isContact = false;
-				for (var i = 0; i < response[0].length; i++) {
-					if (response[0][i] == 'contact.id') {
-						isContact = true;
-						break;
-					}
-				}
-				if (isContact) {
-					var list = [];
-					for (var i = 1; i < response.length; i++)
-						list.push(window.opener.model.convert(type, response, i));
-					callback(list);
-				} else
-					callback(response);
+				var list = [];
+				for (var i = 1; i < response.length; i++)
+					list.push(window.opener.model.convert(type, response, i));
+				callback(list);
 			}
 		});
 	}
