@@ -5,12 +5,23 @@ export { ui };
 
 class ui {
 	static labels;
-	static open(query) {
-		communication.get('contact/' + query, function (response) {
-			charts.initChart(query, response);
-			var e = ui.q('popup');
-			e.style.transform = e.style.transform && e.style.transform.indexOf('1') > 0 ? 'scale(0)' : 'scale(1)';
-		});
+	static open(index) {
+		var s = '', map = {
+			button1: ['User', 'Log'],
+			button2: ['Login', 'Age'],
+			button3: ['Api', 'Locations']
+		};
+		var exec = function (chartToken) {
+			communication.get('contact/' + chartToken, function (response) {
+				charts.initChart(chartToken, response);
+			});
+			return chartToken.toLowerCase();
+		}
+		for (var i = 0; i < map['button' + index].length; i++)
+			s += '<chart class="' + exec(map['button' + index][i]) + '"></chart>';
+		var e = ui.q('popup');
+		e.style.transform = e.style.transform && e.style.transform.indexOf('1') > 0 ? 'scale(0)' : 'scale(1)';
+		ui.q('popup panel').innerHTML = '<div>' + s + '</div>';
 	}
 	static close() {
 		var e = ui.q('popup');
@@ -23,7 +34,7 @@ class ui {
 		var e = ui.q('navigation item.active');
 		if (e)
 			e.classList.remove('active');
-		ui.closeChart();
+		ui.close();
 		ui.q('navigation item:nth-child(' + i + ')').classList.add('active');
 		ui.q('content').style.marginLeft = (-(i - 1) * 100) + '%';
 	}

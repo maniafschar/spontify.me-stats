@@ -9,10 +9,54 @@ class charts {
 	static chartGender;
 	static chartLocations;
 	static chartLog;
+	static chartLogin;
 
 	static initChart(query, data) {
-		ui.q('popup panel').innerHTML = '';
+		ui.q('popup panel chart.' + query.toLowerCase()).innerHTML = '';
+		if (charts['chart' + query])
+			charts['chart' + query].destroy();
 		charts['initChart' + query](data);
+		charts['chart' + query].render();
+	}
+	static initChartLogin(data) {
+		var total = 0, date, labels = [], values = [], processed = {};
+		for (var i = 0; i < data.length; i++) {
+			if (date != data[i].createdAt.substring(0, 10)) {
+				if (date) {
+					labels.push(date);
+					values.push(total);
+				}
+				date = data[i].createdAt.substring(0, 10);
+				if (date.indexOf('-01') == 7) {
+					processed = {};
+					total = 0;
+				}
+			}
+			if (!processed['user' + data[i].contactId]) {
+				processed['user' + data[i].contactId] = true;
+				total++;
+			}
+		}
+		charts.chartLogin = new ApexCharts(ui.q('popup panel chart.login'), {
+			chart: {
+				type: 'line',
+				toolbar: {
+					show: false
+				}
+			},
+			tooltip: {
+				y: {
+					formatter: function (value, { series, seriesIndex, dataPointIndex, w }) {
+						return value;
+					}
+				}
+			},
+			series: [{
+				name: ui.labels.responseTime,
+				data: values
+			}],
+			labels: labels
+		});
 	}
 	static initChartUser(data) {
 		var total = [0, 0, 0, 0], verified = [0, 0, 0, 0], withImage = [0, 0, 0, 0], genderMap = [2, 1, 3, null];
@@ -33,9 +77,7 @@ class charts {
 			verified[i] = (parseInt(verified[i] * 10 + 0.5) / 10);
 			withImage[i] = (parseInt(withImage[i] * 10 + 0.5) / 10);
 		}
-		if (charts.chartGender)
-			charts.chartGender.destroy();
-		charts.chartGender = new ApexCharts(ui.q('popup panel'), {
+		charts.chartGender = new ApexCharts(ui.q('popup panel chart.user'), {
 			chart: {
 				type: 'bar',
 				toolbar: {
@@ -69,7 +111,6 @@ class charts {
 			}],
 			labels: [ui.labels.female, ui.labels.male, ui.labels.divers, ui.labels.noData]
 		});
-		charts.chartGender.render();
 	}
 	static initChartAge(data) {
 		var female = [0, 0, 0, 0, 0, 0, 0], male = [0, 0, 0, 0, 0, 0, 0], divers = [0, 0, 0, 0, 0, 0, 0], noData = [0, 0, 0, 0, 0, 0, 0];
@@ -98,9 +139,7 @@ class charts {
 			divers[i] = parseInt(0.5 + divers[i]);
 			noData[i] = parseInt(0.5 + noData[i]);
 		}
-		if (charts.chartAge)
-			charts.chartAge.destroy();
-		charts.chartAge = new ApexCharts(ui.q('popup panel'), {
+		charts.chartAge = new ApexCharts(ui.q('popup panel chart.age'), {
 			chart: {
 				type: 'bar',
 				toolbar: {
@@ -137,9 +176,6 @@ class charts {
 			}],
 			labels: [ui.labels.until + ' 20', '20-30', '30-40', '40-50', '50-60', ui.labels.from + ' 60', ui.labels.noData]
 		});
-		setTimeout(function () {
-			charts.chartAge.render();
-		}, 400);
 	}
 	static initChartApi(data) {
 		charts.chartApiData = [];
@@ -151,9 +187,7 @@ class charts {
 				charts.chartApiData.push(data[i]);
 			}
 		}
-		if (charts.chartApi)
-			charts.chartApi.destroy();
-		charts.chartApi = new ApexCharts(ui.q('popup panel'), {
+		charts.chartApi = new ApexCharts(ui.q('popup panel chart.api'), {
 			chart: {
 				type: 'bar',
 				toolbar: {
@@ -173,9 +207,6 @@ class charts {
 			}],
 			labels: labels
 		});
-		setTimeout(function () {
-			charts.chartApi.render();
-		}, 400);
 	}
 	static initChartLocations(data) {
 		var l = [], series = [
@@ -210,11 +241,7 @@ class charts {
 				series[i2].data.push(l[i][i2] ? l[i][i2] : 0);
 			labels.push(l[i].town);
 		}
-		if (charts.chartLocations) {
-			charts.chartLocations.destroy();
-			ui.q('chart.locations').innerHTML = '';
-		}
-		charts.chartLocations = new ApexCharts(ui.q('popup panel'), {
+		charts.chartLocations = new ApexCharts(ui.q('popup panel chart.locations'), {
 			chart: {
 				type: 'bar',
 				stacked: true,
@@ -232,9 +259,6 @@ class charts {
 			series: series,
 			labels: labels
 		});
-		setTimeout(function () {
-			charts.chartLocations.render();
-		}, 400);
 	}
 	static initChartLog(data) {
 		var labels = [], values = [];
@@ -244,11 +268,7 @@ class charts {
 				labels.push((i == data.length - 1 ? ui.labels.from + ' ' : '') + (data[i]._time * 20));
 			}
 		}
-		if (charts.chartLog) {
-			charts.chartLog.destroy();
-			ui.q('chart.log').innerHTML = '';
-		}
-		charts.chartLog = new ApexCharts(ui.q('popup panel'), {
+		charts.chartLog = new ApexCharts(ui.q('popup panel chart.log'), {
 			chart: {
 				type: 'line',
 				toolbar: {
@@ -268,9 +288,6 @@ class charts {
 			}],
 			labels: labels
 		});
-		setTimeout(function () {
-			charts.chartLog.render();
-		}, 400);
 	}
 
 }

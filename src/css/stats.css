@@ -55,8 +55,7 @@ mapCanvas {
 	box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
 }
 
-block,
-chart {
+block {
 	display: inline-block;
 	position: relative;
 	background: rgba(255, 255, 255, 0.9);
@@ -67,6 +66,14 @@ chart {
 	width: 40em;
 	color: black;
 	line-height: 1.8;
+}
+
+chart {
+	display: block;
+	position: relative;
+	background: rgba(255, 255, 255, 0.9);
+	border-radius: 0.5em;
+	color: black;
 }
 
 popup {
@@ -97,6 +104,6 @@ popup close {
 popup panel {
 	position: relative;
 	display: block;
-	width: 100%;
+	overflow-y: auto;
 	height: 100%;
 }

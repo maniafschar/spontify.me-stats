@@ -10,8 +10,14 @@ class communication {
 			webCall: 'communication.get(type,callback)',
 			success(response) {
 				var list = [];
-				for (var i = 1; i < response.length; i++)
-					list.push(window.opener.model.convert(type, response, i));
+				for (var i = 1; i < response.length; i++) {
+					var o = {}, keys = response[0];
+					for (var i2 = 0; i2 < keys.length; i2++) {
+						var k = keys[i2].split('.');
+						o[k[k.length - 1]] = response[i][i2];
+					}
+					list.push(o);
+				}
 				callback(list);
 			}
 		});
