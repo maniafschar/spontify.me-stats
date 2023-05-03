@@ -92,13 +92,17 @@ popup {
 	padding: 1em !important;
 }
 
+marketing add,
 popup close {
 	position: absolute;
 	right: 0;
 	top: 0;
-	padding: 0.5em 0.75em 5em 5em;
-	opacity: 0.3;
+	padding: 0.5em 0.75em 1.5em 5em;
 	cursor: pointer;
+}
+
+popup close {
+	opacity: 0.3;
 }
 
 popup panel {
@@ -106,4 +110,68 @@ popup panel {
 	display: block;
 	overflow-y: auto;
 	height: 100%;
+}
+
+marketing add {
+	display: block;
+	padding: 0.5em 0.75em 1em 2.5em;
+	font-size: 2em;
+	font-weight: bold;
+}
+
+popup add::after,
+marketing add::after {
+	content: '+';
+}
+
+popup add.question {
+	display: block;
+	color: black;
+	opacity: 1;
+	position: relative;
+	font-size: 3em;
+	padding: 0;
+	height: 1em;
+	line-height: 1;
+	text-align: right;
+}
+
+questions value span {
+	margin-top: 1.25em;
+	position: relative;
+	display: inline-block;
+	padding-right: 1em;
+}
+
+questions value select {
+	width: 40%;
+	margin-top: 1em;
+}
+
+questions value.multiSelect nextQuestion {
+	display: none;
+}
+
+questions value answer {
+	margin-bottom: 1em;
+	text-align: right;
+	display: block;
+	position: relative;
+}
+
+popup .marketingPeriod {
+	text-align: center;
+}
+
+popup .marketingPeriod input {
+	width: 40%;
+	margin: 0 0.5em;
+}
+
+row {
+	margin: 0 -1em;
+}
+
+row>div {
+	padding: 0.75em;
 }

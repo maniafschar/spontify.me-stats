@@ -10,6 +10,7 @@ class charts {
 	static chartLocations;
 	static chartLog;
 	static chartLogin;
+	static chartUser;
 
 	static initChart(query, data) {
 		ui.q('popup panel chart.' + query.toLowerCase()).innerHTML = '';
@@ -77,7 +78,7 @@ class charts {
 			verified[i] = (parseInt(verified[i] * 10 + 0.5) / 10);
 			withImage[i] = (parseInt(withImage[i] * 10 + 0.5) / 10);
 		}
-		charts.chartGender = new ApexCharts(ui.q('popup panel chart.user'), {
+		charts.chartUser = new ApexCharts(ui.q('popup panel chart.user'), {
 			chart: {
 				type: 'bar',
 				toolbar: {
@@ -197,7 +198,7 @@ class charts {
 			tooltip: {
 				y: {
 					formatter: function (value, { series, seriesIndex, dataPointIndex, w }) {
-						return ui.labels.calls.replace('{0}', value).replace('{1}', parseInt(charts.chartApiData[dataPointIndex]._time + 0.5));
+						return window.opener.ui.labels.calls.replace('{0}', value).replace('{1}', parseInt(charts.chartApiData[dataPointIndex]._time + 0.5));
 					}
 				}
 			},
@@ -210,16 +211,16 @@ class charts {
 	}
 	static initChartLocations(data) {
 		var l = [], series = [
-			{ name: ui.labels.category0, data: [] },
-			{ name: ui.labels.category1, data: [] },
-			{ name: ui.labels.category2, data: [] },
-			{ name: ui.labels.category3, data: [] },
-			{ name: ui.labels.category4, data: [] },
-			{ name: ui.labels.category5, data: [] }
+			{ name: window.opener.ui.labels.category0, data: [] },
+			{ name: window.opener.ui.labels.category1, data: [] },
+			{ name: window.opener.ui.labels.category2, data: [] },
+			{ name: window.opener.ui.labels.category3, data: [] },
+			{ name: window.opener.ui.labels.category4, data: [] },
+			{ name: window.opener.ui.labels.category5, data: [] }
 		];
 		for (var i = 1; i < data.length; i++) {
-			var category = parseInt(data[i].location.category);
-			var town = data[i].location.town;
+			var category = parseInt(data[i].category);
+			var town = data[i].town;
 			var e = null;
 			for (var i2 = 0; i2 < l.length; i2++) {
 				if (l[i2].town == town) {

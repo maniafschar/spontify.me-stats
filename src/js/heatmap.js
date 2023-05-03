@@ -7,7 +7,7 @@ class heatmap {
 	static map;
 
 	static init() {
-		communication.get('contact/location', function (l) {
+		communication.get('statistics/contact/location', function (l) {
 			var points = [], n = 10000, w = 10000, s = -10000, e = -10000;
 			for (var i = 0; i < l.length; i++) {
 				points.push(new google.maps.LatLng(l[i][0], l[i][1]));

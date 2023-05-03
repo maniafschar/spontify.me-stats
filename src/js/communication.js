@@ -1,24 +1,25 @@
-import { heatmap } from "./heatmap";
-
 export { communication }
 
 class communication {
 	static get(type, callback) {
 		window.opener.communication.ajax({
-			url: window.opener.global.serverApi + 'statistics/' + type,
+			url: window.opener.global.serverApi + type,
 			responseType: 'json',
 			webCall: 'communication.get(type,callback)',
 			success(response) {
-				var list = [];
-				for (var i = 1; i < response.length; i++) {
-					var o = {}, keys = response[0];
-					for (var i2 = 0; i2 < keys.length; i2++) {
-						var k = keys[i2].split('.');
-						o[k[k.length - 1]] = response[i][i2];
+				if (type.indexOf('statistics/contact/') == 0) {
+					var list = [];
+					for (var i = 1; i < response.length; i++) {
+						var o = {}, keys = response[0];
+						for (var i2 = 0; i2 < keys.length; i2++) {
+							var k = keys[i2].split('.');
+							o[k[k.length - 1]] = response[i][i2];
+						}
+						list.push(o);
 					}
-					list.push(o);
+					response = list;
 				}
-				callback(list);
+				callback(response);
 			}
 		});
 	}
@@ -44,5 +45,18 @@ class communication {
 				document.head.appendChild(script);
 			}
 		});
+	}
+	static save(o, callback) {
+		window.opener.communication.ajax({
+			url: window.opener.global.serverApi + 'db/one',
+			method: 'PUT',
+			body: { classname: 'Client', id: window.opener.user.clientId, values: { storage: JSON.stringify(o) } },
+			responseType: 'json',
+			webCall: 'communication.save(o,callback)',
+			success() {
+				callback();
+			}
+		});
+
 	}
 }
