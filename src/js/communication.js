@@ -7,19 +7,16 @@ class communication {
 			responseType: 'json',
 			webCall: 'communication.get(type,callback)',
 			success(response) {
-				if (type.indexOf('statistics/contact/') == 0) {
-					var list = [];
-					for (var i = 1; i < response.length; i++) {
-						var o = {}, keys = response[0];
-						for (var i2 = 0; i2 < keys.length; i2++) {
-							var k = keys[i2].split('.');
-							o[k[k.length - 1]] = response[i][i2];
-						}
-						list.push(o);
+				var list = [];
+				for (var i = 1; i < response.length; i++) {
+					var o = {}, keys = response[0];
+					for (var i2 = 0; i2 < keys.length; i2++) {
+						var k = keys[i2].split('.');
+						o[k[k.length - 1]] = response[i][i2];
 					}
-					response = list;
+					list.push(o);
 				}
-				callback(response);
+				callback(list);
 			}
 		});
 	}
@@ -50,7 +47,7 @@ class communication {
 		window.opener.communication.ajax({
 			url: window.opener.global.serverApi + 'db/one',
 			method: 'PUT',
-			body: { classname: 'Client', id: window.opener.user.clientId, values: { storage: JSON.stringify(o) } },
+			body: { classname: 'ClientMarketing', id: o.id, values: o },
 			responseType: 'json',
 			webCall: 'communication.save(o,callback)',
 			success() {

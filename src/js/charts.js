@@ -40,16 +40,9 @@ class charts {
 		}
 		charts.chartLogin = new ApexCharts(ui.q('popup panel chart.login'), {
 			chart: {
-				type: 'line',
+				type: 'bar',
 				toolbar: {
 					show: false
-				}
-			},
-			tooltip: {
-				y: {
-					formatter: function (value, { series, seriesIndex, dataPointIndex, w }) {
-						return value;
-					}
 				}
 			},
 			series: [{
