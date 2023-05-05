@@ -55,6 +55,7 @@ class marketing {
 	<value><textarea name="epilog">${v.storage.epilog}</textarea></value>
 </field>
 <br />
+<buttontext class="bgColor${v.hideSave}" onclick="marketing.test()">Test</buttontext>
 <buttontext class="bgColor${v.hideSave}" onclick="marketing.save()">${window.opener.ui.l('save')}</buttontext>
 </fieldset>`;
 	static templateQuestion = v =>
@@ -196,6 +197,16 @@ class marketing {
 	}
 	static save() {
 		communication.save(marketing.html2json(), ui.close);
+	}
+	static test() {
+		var d = marketing.html2json();
+		communication.save(d,
+			function () {
+				d.storage = JSON.parse(d.storage);
+				window.opener.marketing.data = d;
+				window.opener.marketing.open();
+				window.close();
+			});
 	}
 	static toggleAnswerType(e) {
 		e.target.parentElement.classList = e.target.checked ? 'multiSelect' : '';
