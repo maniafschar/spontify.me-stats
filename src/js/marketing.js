@@ -203,6 +203,7 @@ class marketing {
 		communication.save(d,
 			function () {
 				d.storage = JSON.parse(d.storage);
+				d.mode = 'test';
 				window.opener.marketing.data = d;
 				window.opener.marketing.open();
 				window.close();
