@@ -40,14 +40,6 @@ card bottom {
 	padding: 0.5em;
 }
 
-navigation>item {
-	width: 33.33% !important;
-}
-
-navigation>item img {
-	height: 2em;
-}
-
 mapCanvas {
 	display: inline-block;
 	width: 100%;
@@ -191,4 +183,53 @@ row {
 
 row>div {
 	padding: 0.75em;
+}
+
+row>div buttontext {
+	position: absolute;
+	right: 0.5em;
+	bottom: 1em;
+}
+
+results {
+	text-align: left;
+	position: relative;
+	display: block;
+	padding-bottom: 3em;
+}
+
+results question,
+results answer {
+	display: block;
+	position: relative;
+}
+
+results answer percentage {
+	width: 10%;
+	display: inline-block;
+}
+
+results answer percentage::after {
+	content: '%';
+}
+
+results question {
+	margin-top: 2em;
+	font-weight: bold;
+}
+
+results freetexttitle {
+	position: relative;
+	display: block;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+results freetext {
+	display: none;
+	position: relative;
+}
+
+results freetext div {
+	padding: 0.25em;
 }

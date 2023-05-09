@@ -1,9 +1,9 @@
-export { communication }
+export { communication2 }
 
-class communication {
+class communication2 {
 	static get(type, callback) {
-		window.opener.communication.ajax({
-			url: window.opener.global.serverApi + type,
+		communication.ajax({
+			url: window.global.serverApi + type,
 			responseType: 'json',
 			webCall: 'communication.get(type,callback)',
 			success(response) {
@@ -32,8 +32,8 @@ class communication {
 		xmlhttp.send();
 	}
 	static loadMap() {
-		window.opener.communication.ajax({
-			url: window.opener.global.serverApi + 'action/google?param=js',
+		communication.ajax({
+			url: window.global.serverApi + 'action/google?param=js',
 			responseType: 'text',
 			webCall: 'communication.loadMap()',
 			success(r) {
@@ -44,8 +44,8 @@ class communication {
 		});
 	}
 	static save(o, callback) {
-		window.opener.communication.ajax({
-			url: window.opener.global.serverApi + 'db/one',
+		communication.ajax({
+			url: window.global.serverApi + 'db/one',
 			method: 'PUT',
 			body: { classname: 'ClientMarketing', id: o.id, values: o },
 			responseType: 'json',
@@ -54,6 +54,5 @@ class communication {
 				callback();
 			}
 		});
-
 	}
 }

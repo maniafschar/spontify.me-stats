@@ -1,4 +1,4 @@
-import { ui } from "./ui";
+import { ui2 } from "./ui2";
 
 export { charts };
 
@@ -13,7 +13,7 @@ class charts {
 	static chartUser;
 
 	static initChart(query, data) {
-		ui.q('popup panel chart.' + query.toLowerCase()).innerHTML = '';
+		ui.q('main.statistics popup panel chart.' + query.toLowerCase()).innerHTML = '';
 		if (charts['chart' + query])
 			charts['chart' + query].destroy();
 		charts['initChart' + query](data);
@@ -38,7 +38,7 @@ class charts {
 				total++;
 			}
 		}
-		charts.chartLogin = new ApexCharts(ui.q('popup panel chart.login'), {
+		charts.chartLogin = new ApexCharts(ui.q('main.statistics popup panel chart.login'), {
 			chart: {
 				type: 'bar',
 				toolbar: {
@@ -46,7 +46,7 @@ class charts {
 				}
 			},
 			series: [{
-				name: ui.labels.responseTime,
+				name: ui2.labels.responseTime,
 				data: values
 			}],
 			labels: labels
@@ -71,7 +71,7 @@ class charts {
 			verified[i] = (parseInt(verified[i] * 10 + 0.5) / 10);
 			withImage[i] = (parseInt(withImage[i] * 10 + 0.5) / 10);
 		}
-		charts.chartUser = new ApexCharts(ui.q('popup panel chart.user'), {
+		charts.chartUser = new ApexCharts(ui.q('main.statistics popup panel chart.user'), {
 			chart: {
 				type: 'bar',
 				toolbar: {
@@ -92,18 +92,18 @@ class charts {
 				offsetX: 0,
 			},
 			series: [{
-				name: ui.labels.total,
+				name: ui2.labels.total,
 				data: total
 			},
 			{
-				name: ui.labels.verified,
+				name: ui2.labels.verified,
 				data: verified
 			},
 			{
-				name: ui.labels.withImage,
+				name: ui2.labels.withImage,
 				data: withImage
 			}],
-			labels: [ui.labels.female, ui.labels.male, ui.labels.divers, ui.labels.noData]
+			labels: [ui2.labels.female, ui2.labels.male, ui2.labels.divers, ui2.labels.noData]
 		});
 	}
 	static initChartAge(data) {
@@ -133,7 +133,7 @@ class charts {
 			divers[i] = parseInt(0.5 + divers[i]);
 			noData[i] = parseInt(0.5 + noData[i]);
 		}
-		charts.chartAge = new ApexCharts(ui.q('popup panel chart.age'), {
+		charts.chartAge = new ApexCharts(ui.q('main.statistics popup panel chart.age'), {
 			chart: {
 				type: 'bar',
 				toolbar: {
@@ -153,22 +153,22 @@ class charts {
 				}
 			},
 			series: [{
-				name: ui.labels.female,
+				name: ui2.labels.female,
 				data: female
 			},
 			{
-				name: ui.labels.male,
+				name: ui2.labels.male,
 				data: male
 			},
 			{
-				name: ui.labels.divers,
+				name: ui2.labels.divers,
 				data: divers
 			},
 			{
-				name: ui.labels.noData,
+				name: ui2.labels.noData,
 				data: noData
 			}],
-			labels: [ui.labels.until + ' 20', '20-30', '30-40', '40-50', '50-60', ui.labels.from + ' 60', ui.labels.noData]
+			labels: [ui2.labels.until + ' 20', '20-30', '30-40', '40-50', '50-60', ui2.labels.from + ' 60', ui2.labels.noData]
 		});
 	}
 	static initChartApi(data) {
@@ -181,7 +181,7 @@ class charts {
 				charts.chartApiData.push(data[i]);
 			}
 		}
-		charts.chartApi = new ApexCharts(ui.q('popup panel chart.api'), {
+		charts.chartApi = new ApexCharts(ui.q('main.statistics popup panel chart.api'), {
 			chart: {
 				type: 'bar',
 				toolbar: {
@@ -191,7 +191,7 @@ class charts {
 			tooltip: {
 				y: {
 					formatter: function (value, { series, seriesIndex, dataPointIndex, w }) {
-						return window.opener.ui.labels.calls.replace('{0}', value).replace('{1}', parseInt(charts.chartApiData[dataPointIndex]._time + 0.5));
+						return ui2.labels.calls.replace('{0}', value).replace('{1}', parseInt(charts.chartApiData[dataPointIndex]._time + 0.5));
 					}
 				}
 			},
@@ -204,12 +204,12 @@ class charts {
 	}
 	static initChartLocations(data) {
 		var l = [], series = [
-			{ name: window.opener.ui.labels.category0, data: [] },
-			{ name: window.opener.ui.labels.category1, data: [] },
-			{ name: window.opener.ui.labels.category2, data: [] },
-			{ name: window.opener.ui.labels.category3, data: [] },
-			{ name: window.opener.ui.labels.category4, data: [] },
-			{ name: window.opener.ui.labels.category5, data: [] }
+			{ name: ui2.labels.category0, data: [] },
+			{ name: ui2.labels.category1, data: [] },
+			{ name: ui2.labels.category2, data: [] },
+			{ name: ui2.labels.category3, data: [] },
+			{ name: ui2.labels.category4, data: [] },
+			{ name: ui2.labels.category5, data: [] }
 		];
 		for (var i = 1; i < data.length; i++) {
 			var category = parseInt(data[i].category);
@@ -259,10 +259,10 @@ class charts {
 		for (var i = 0; i < data.length; i++) {
 			if (data[i]._time > -1) {
 				values.push(parseInt('' + (data[i]._count * 100 + 0.5)));
-				labels.push((i == data.length - 1 ? ui.labels.from + ' ' : '') + (data[i]._time * 20));
+				labels.push((i == data.length - 1 ? ui2.labels.from + ' ' : '') + (data[i]._time * 20));
 			}
 		}
-		charts.chartLog = new ApexCharts(ui.q('popup panel chart.log'), {
+		charts.chartLog = new ApexCharts(ui.q('main.statistics popup panel chart.log'), {
 			chart: {
 				type: 'line',
 				toolbar: {
@@ -277,7 +277,7 @@ class charts {
 				}
 			},
 			series: [{
-				name: ui.labels.responseTime,
+				name: ui2.labels.responseTime,
 				data: values
 			}],
 			labels: labels
