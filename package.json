@@ -2,7 +2,8 @@
   "dependencies": {
     "apexcharts": "^3.37.2",
     "google-maps": "^4.3.3",
-    "heatmap.js": "^2.0.5"
+    "heatmap.js": "^2.0.5",
+    "afterwork": "git@github.com:maniafschar/spontify.me-web.git#0.5.0"
   },
   "devDependencies": {
     "webpack-cli": "^5.0.1"
